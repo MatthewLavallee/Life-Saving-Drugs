@@ -1,0 +1,123 @@
+---
+title: "Life-Saving Drugs, V3"
+author: "Chima D. Ndumele, PhD; Matthew P. Lavallee, BA; Anthony Lollo, PhD; Joseph S. Ross, MD,MS; Erica Spatz, PhD; Mark Schlesinger, PhD; Reza Yousebi, PhD; and Jacob Wallace, PhD;"
+date: "From the Department of Health Policy and Management, Yale School of Public Health (Ndumele, Lavallee, Lollo, Ross, Schlesinger, Yousebi, Wallace); the Tobin Center for Economic Policy, Yale University (Lavallee); Center for Outcomes Research and Evaluation, Yale-New Haven Hospital (Ross, Spatz); Section of General Internal Medicine (Ross) and Section of Cardiology(Spatz),and  Yale School of Medicine; all in New Haven, Connecticut"
+indent:
+output: 
+  word_document:
+    reference_docx: word_styles_real.docx
+bibliography: ref.bib
+link-citations: true
+csl: the-lancet.csl
+---
+\newpage
+# Introduction
+# Methods
+
+## Overview
+
+## Data Sources 
+
+We drew from five publicly available sources. First, we used annual reports from the Center of Medicare & Medicaid Services (CMS) to collect state-level enrollment numbers for Medicaid and Medicare from 2004 to 2020. Second, we used the Behavioral Risk Factor Surveillance System (BRFSS) from the Centers for Disease Control and Prevention to estimate the proportion of individuals in each program with type 2 diabetes. Third, we used the National Drug Code Directory (NDCD) from the Food & Drug Administration to collect the NDC codes which were used for SGLT-2 and GLP-1. Finally, we used the State Drug Utilization Data (SDUD) and the Medicare Part D Prescribers dataset both made available by CMS, which provided state-by-year drug utilization numbers.
+
+## Study Design and Population
+## Study Variables
+# Results
+# Discussion
+# X
+```{r fig 1, fig.cap='this is a caption',echo=FALSE,warning=F}
+library(here)
+knitr::include_graphics(here::here("trunk","analysis","figures","Figure 1","fig1.3.png"))
+```
+
+```{r fig 2, fig.cap='this is a caption',echo=FALSE,warning=F}
+knitr::include_graphics(here::here("trunk","analysis","figures","Figure 3","fig3.2.png"))
+```
+
+```{r fig 3, fig.cap='this is a caption',echo=FALSE,warning=F,message=F}
+knitr::include_graphics(here::here("trunk","analysis","figures","Figure 2","fig2.2.png"))
+```
+
+
+```{r tabs,fig.align='center', fig.cap='this is a caption',echo=FALSE,warning=F,message=F}
+library(flextable)
+library(data.table)
+library(tidyverse)
+df<-fread(here("trunk","analysis","figures","Table 1","tab1.1.csv"))
+df[,Year:=as.character(Year)]%>%
+  flextable()%>%
+  set_header_labels(Year="Year",
+                    `Top Quintile1`="Top Quintile",
+                    `Bottom Quintile1`="Bottom Quintile")%>%
+  add_header_row(values=c("","Medicaid","Medicare"),colwidths = c(1,2,2))%>%
+  add_header_lines(values = "Table X: GLP-1 & SGLT-2 Days Supplied")%>%
+  align(align = "center", part = "all")%>%
+  autofit(add_w=0.1,part="body")
+```
+\newpage 
+```{r tabs2,fig.align='center', fig.cap='this is a caption',echo=FALSE,warning=F,message=F}
+library(flextable)
+library(data.table)
+library(tidyverse)
+df<-fread(here("trunk","analysis","figures","Table 1","tab1.2.csv"))
+df[,Year:=as.character(Year)]%>%
+  flextable()%>%
+  add_header_row(values=c("","Mean (SD)"),colwidths=c(1,2))%>%
+  add_header_lines(values = "Table X: GLP-1 & SGLT-2 Days Supplied")%>%
+  align(align = "center", part = "all")%>%
+  autofit(add_w=0.1,part="body")
+```
+\newpage 
+```{r tabs3,fig.align='center', fig.cap='this is a caption',echo=FALSE,warning=F,message=F}
+library(flextable)
+library(data.table)
+library(tidyverse)
+df<-fread(here("trunk","analysis","figures","Table 1","tab1.3.csv"))
+df[,Year:=as.character(Year)]%>%
+  flextable()%>%
+  add_header_lines(values = "Table X: GLP-1 & SGLT-2 Days Supplied")%>%
+  align(align = "center", part = "all")%>%
+  autofit(add_w=0.1,part="body")
+```
+\newpage 
+```{r tabs4,fig.align='center', fig.cap='this is a caption',echo=FALSE,warning=F,message=F}
+library(flextable)
+library(data.table)
+library(tidyverse)
+df<-fread(here("trunk","analysis","figures","Table 1","tab1.4.csv"))
+df%>%
+  flextable()%>%
+  add_header_lines(values = "Table X: Program Characteristics by Quintile")%>%
+  set_header_labels(program="Program",
+                    variable="Variable")%>%
+  merge_v(j=c("program"))%>%
+  align(align = "center", part = "all")%>%
+  autofit(add_w=0.1,part="body",hspans="divided")
+```
+\newpage 
+```{r tabs5,fig.align='center', fig.cap='this is a caption',echo=FALSE,warning=F,message=F}
+library(flextable)
+library(data.table)
+library(tidyverse)
+dfx<-fread(here("trunk","analysis","figures","Table 1","tab1.5.csv"))
+df<-dfx[-1]
+names(df)<-paste(dfx[1])
+df%>%
+  flextable()%>%
+  add_header_row(values=c("","Mean (SD)"),colwidths=c(2,5))%>%
+  add_header_lines(values = "Table X: Program Characteristics by Quintile")%>%
+  set_header_labels(prg="Program",
+                    var="Variable",
+                    `1`="Top Quintile",
+                    `2`="Second Quintile",
+                    `3`="Third Quintile",
+                    `4`="Fourth Quintile",
+                    `5`="Bottom Quintile")%>%
+  merge_v(j=c("prg"))%>%
+  align(align = "center", part = "all")%>%
+  autofit(add_w=0.1,part="body",hspans="divided")
+```
+
+\newpage
+
+# References

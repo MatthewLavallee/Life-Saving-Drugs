@@ -1,0 +1,28 @@
+---
+title: "Untitled"
+author: "Lavallee, Matthew"
+date: "1/18/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(here)
+```
+
+```{r create descriptive analysis}
+  #outdated, all in icebox now
+source(here("code","create_analysis","create maps","create_maps.R"), local = knitr::knit_global())
+# output: creates maps of days supplied, changes in days supplied, and initial utilization, here("trunk","analysis","figures","maps")
+
+source(here("code","create_analysis","create boxplots","create_days_supplied_boxplot.R"), local = knitr::knit_global())
+# output: creates trends plots for days supplied from 30-day fills for each program. here("trunk","analysis","figures","boxplots","drug_class_insurance_rates.png") , here("trunk","analysis","figures","boxplots","insurance_drug_class_rates.png")
+
+source(here("code","create_analysis","create charts","create_days_supplied_charts.R"), local = knitr::knit_global())
+#output: creates trends plots for days supplied from each program, here("trunk","analysis","figures","line charts","days_supplied_by_insurer.png"), here("trunk","analysis","figures","line charts","days_supplied_by_drug_class.png")
+```
+
+```{r prelim figures}
+source(here("code","create_analysis","create figs","fig1.R"), local = knitr::knit_global())
+#creates all variations of figure and table 1
+```

@@ -1,0 +1,110 @@
+---
+title: "run_project"
+author: "Lavallee, Matthew"
+date: "2022-08-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(here)
+```
+
+#Create Data----
+```{r create data, include=FALSE}
+source(here("code","create_data","fpl","create_fpl.R"), local = knitr::knit_global())
+# purpose: script pulls poverty numbers and creates df
+# source: https://aspe.hhs.gov/sites/default/files/documents/8e7483715719918e8fddb58ab23f606d/Guidelines-1983-2022.xlsx
+# output: here("trunk","raw","FPL","fpls.xlsx")
+
+source(here("code","create_data","brfss circus","create_medicaid_expan.R"), local = knitr::knit_global())
+# purpose: script pulls KFF data on when states expanded and cleans for merging and comparison
+# source: https://www.kff.org/medicaid/issue-brief/status-of-state-medicaid-expansion-decisions-interactive-map/
+# output: here("trunk","derived","brfss_denoms","medicaid_year_expansion.csv")
+
+source(here("code","create_data","brfss circus","convert_brfss.R"), local = knitr::knit_global())
+# purpose: converts BRFSS data to .txt files to speed up process
+# source: https://www.cdc.gov/brfss/annual_data/annual_data.htm
+# output: set of annual dataframes 
+
+source(here("code","create_data","brfss circus","aggregate_brfss.R"), local = knitr::knit_global())
+# purpose: reads in, wrangles, and aggregates BRFSS data to create estimates of % of Medicaid/Medicare enrollees with diabetes
+# output: here("trunk","derived","brfss_denoms","brfss_denoms.txt")
+
+source(here("code","create_data","ndc codes","fda_ndc_directory.R"), local = knitr::knit_global())
+# purpose: script pulls the fda's ndc directory and subsets to ndcs with a pharm_class of SGL-2 or GLP-1
+# source for data: https://www.fda.gov/drugs/drug-approvals-and-databases/national-drug-code-directory
+# output: GLP-1 & SGLT-2 NDC codes - here("trunk","derived","relevant_ndc.txt")
+
+source(here("code","create_data","ndc codes","convert_ndcs.R"), local = knitr::knit_global())
+# purpose: NDC codes are 10 digit for packaging (FDA NDC database) and 11 digit for billing (SDUD data). Script converts from 10-digit to 11-digit codes.
+# source for conversion methods: here("docs","NDC converversion to 11 digits.pdf")
+#output: converted ndc codes - here("trunk","derived","relevant_ndc_fixed.txt")
+
+source(here("code","create_data","monthly enrollment","monthly_med.R"), local = knitr::knit_global())
+# purpose: creates monthly enrollment files from annual reports
+# output: complete medicaid dataset here("trunk","raw","Monthly Medicaid Data","data","medicaid_june.txt")
+
+source(here("code","create_data","create medicaid","medicaid_utilization_data.R"), local = knitr::knit_global())
+# purpose: script wrangles SDUD data to only relevant state-quarter-ndc-utilization type observations
+# source for data: https://data.medicaid.gov/datasets?theme[0]=State%20Drug%20Utilization&fulltext=state%20drug%20utilization&sort=modified
+# output: relevant utilization in medicaid - here("trunk","derived","medicaid data,"relevant_sdud.txt")
+
+source(here("code","create_data","create medicaid","medicaid_days_supplied.R"), local = knitr::knit_global())
+# purpose: script creates days supplied from prod and pack codes
+# source: https://ndclist.com/ndc/, https://www.hipaaspace.com, https://fda.report/NDC/0310-6520
+# output: crosswalk from codes to days supplied here("trunk","derived","medicaid data,"medicaid_days_xw.txt")
+
+  #source(here("code","create_data","create medicaid","merge_acs_pep_sdud.R"), local = knitr::knit_global())
+  #script outdated, in icebox now
+
+source(here("code","create_data","create medicaid","merge_enroll_sdud.R"), local = knitr::knit_global())
+# purpose: script merges monthly enrollment, and sdud, and aggregates to a year-state-ndc level
+# output: complete medicaid dataset here("trunk","derived","medicaid data","sdud_with_medicaid_estimates.txt")
+
+source(here("code","create_data","create medicare","medicare_utilization_data.R"), local = knitr::knit_global())
+# purpose: script wrangles SDUD data to only relevant state-ndc-year observations
+# source for data: https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-geography-and-drug
+# output relevant medicare data here("trunk","derived","medicare data","relevant_medicare.txt")
+
+  #source(here("code","create_data","create medicare","merge_acs_pep_medicare.R"), local = knitr::knit_global())
+  #script outdated, in icebox now
+
+source(here("code","create_data","create medicare","merge_enroll_medicare.R"), local = knitr::knit_global())
+# purpose: script merges annual enrollment data for Medicare 
+# output: complete medicare dataset here("trunk","derived","medicare data","medicare_with_medicare_estimates.txt")
+
+source(here("code","create_data","final merges","merge_medicaid_medicare.R"), local = knitr::knit_global())
+# purpose: merges medicaid and medicare data
+# output: complete final dataset here("trunk","derived","final datasets","annual_df.txt")
+
+source(here("code","create_data","create ahrf","create_ahrf.R"), local = knitr::knit_global())
+# purpose: reads in ahrf data for table 1
+# output: here("trunk","raw","AHRF","ahrf.txt")
+```
+
+```{r create ahrf}
+source(here("code","create_data","create ahrf","create_ahrf.R"), local = knitr::knit_global())
+# purpose: reads in ahrf data for table 1
+# output: here("trunk","raw","AHRF","ahrf.txt")
+```
+
+#Create Analysis----
+```{r figures}
+source(here("code","create_analysis","create figs","fig1.R"), local = knitr::knit_global())
+#purpose: creates all variants of potential figure 1, not currently in manuscript
+
+source(here("code","create_analysis","create figs","fig2.R"), local = knitr::knit_global())
+# purpose creates variants of figure 2, currently in manuscript as quintile transition figure
+
+source(here("code","create_analysis","create figs","fig3.R"), local = knitr::knit_global())
+# purpose creates variants of figure 3, currently in manuscript as map transition
+```
+
+#Write Manuscript----
+```{r manuscript}
+rmarkdown::render(here("manuscripts","manuscript.Rmd"), "word_document")
+#purpose: writes manuscript
+browseURL(here("manuscripts","manuscript.docx"))
+#purpose: open .docx
+```
