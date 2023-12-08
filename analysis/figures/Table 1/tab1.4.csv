@@ -1,0 +1,41 @@
+program,variable,Top Quintile,Second Quintile,Third Quintile,Fourth Quintile,Bottom Quintile
+Medicaid,"Rate of Days Supplied
+per 1000 Enrollees","4815.06
+(2911.09)","3015.52
+(1879.55)","2023.61
+(1265.03)","1316.58
+(849.72)","604.84
+(523.54)"
+Medicaid,Population of Program,"207211.57
+(284154.87)","109967.2
+(164785.28)","137551.05
+(141628.2)","152790.84
+(195932.59)","104515.87
+(91039.55)"
+Medicaid,"Percent Diabetic
+in Program","9.89
+(2.44)","10.34
+(2.15)","10.68
+(2.27)","10.59
+(2.6)","11.81
+(2.32)"
+Medicare,"Rate of Days Supplied
+per 1000 Enrollees","17454.61
+(9849.54)","15000.36
+(8666.71)","13083.49
+(7852.09)","11684.06
+(7207.02)","9559.49
+(6140.84)"
+Medicare,Population of Program,"275157.3
+(225669.69)","241176.22
+(248919.28)","303782.49
+(341169.92)","208194.27
+(224878.24)","158641.36
+(185623.53)"
+Medicare,"Percent Diabetic
+in Program","21.26
+(2.69)","22.2
+(3.05)","21.4
+(3.04)","20.58
+(2.81)","20.09
+(2.29)"
